@@ -162,12 +162,7 @@ def crossmax(logit, b, n, c):
   logit_ = torch.median(logit_, dim=1)[0]
   return logit_
 
-trans = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5071, 0.4867, 0.4408], std=[0.2675, 0.2565, 0.2761])
-])
-
-train_dataset = Datasets.CIFAR100(root='./data', train=True, download=True)
+train_dataset = Datasets.CIFAR100(root='./data', train=True, download=True, transform=MultiResolutionTransform())
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, num_workers=8)
 
 test_dataset = Datasets.CIFAR100(root='./data', train=False, download=True, transform=MultiResolutionTestTransform())
